@@ -13,9 +13,9 @@ function Book(title, author, desc) {
   this.wasRead = false;
 }
 
-Book.prototype.toggleRead = function() {
- this.wasRead = !this.wasRead; 
-}
+Book.prototype.toggleRead = () => {
+  this.wasRead = !this.wasRead;
+};
 
 const removeBook = (e) => {
   const { bookId } = e.target.dataset;
@@ -25,7 +25,7 @@ const removeBook = (e) => {
 
 const readBook = (e) => {
   const { bookId } = e.target.dataset;
-  let book = myLibrary.find(book => book.id === bookId);
+  const book = myLibrary.find(book => book.id === bookId);
   book.toggleRead();
   render();
 };
