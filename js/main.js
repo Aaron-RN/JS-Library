@@ -13,7 +13,7 @@ function Book(title, author, desc) {
   this.wasRead = false;
 }
 
-Book.prototype.toggleRead = () => {
+Book.prototype.toggleRead = function() {
   this.wasRead = !this.wasRead;
 };
 
@@ -64,6 +64,7 @@ function addBookToLibrary() {
 
 const storedBooks = localStorage.getItem('myLibrary');
 if (storedBooks) {
-  myLibrary = [...JSON.parse(storedBooks)];
+  const books = JSON.parse(storedBooks).map((storedBook) => Object.assign(new Book(), storedBook));
+  myLibrary = [...books];
   render();
 }
