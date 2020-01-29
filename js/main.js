@@ -1,4 +1,6 @@
 const libraryDiv = document.getElementById('Library');
+const errorElem = document.getElementById('errors');
+const btnNewBook = document.getElementById('btnNewBook');
 const btnAddBook = document.getElementById('btnAddBook');
 let myLibrary = [];
 
@@ -34,17 +36,22 @@ const readBook = (e) => {
 
 const bookToHTML = (book) => `
   <div class="book col-md-6">
-    <div class="card">
+    <div class="card shadow">
       <div class="card-body">
         <h5 class="card-title">${book.title}</h5>
         <h6 class="card-subtitle mb-2 text-muted">By ${book.author}</h6>
         <p class="card-text">${book.desc}</p>
-        <button class="card-link btn btn-read btn-${book.wasRead ? 'success' : 'light'}" data-book-id="${book.id}">
+        <button class="card-link btn btn-sm btn-read btn-${book.wasRead ? 'success' : 'secondary'}" data-book-id="${book.id}">
           ${book.wasRead ? 'Mark as unread' : 'Mark as read'}
         </button>
-        <button class="card-link btn btn-danger btn-remove-book" data-book-id="${book.id}">Remove book</button>
+        <button class="card-link btn btn-sm btn-danger btn-remove-book" data-book-id="${book.id}">Remove book</button>
       </div>
     </div>
+  </div>`;
+
+const errorToHTML = (error) => `
+  <div class="alert alert-danger" role="alert">
+    ${error}
   </div>`;
 
 function render() {
@@ -57,12 +64,22 @@ function render() {
 }
 
 function addBookToLibrary() {
+  const errors = [];
   const bookTitle = document.getElementById('title');
   const bookAuthor = document.getElementById('author');
   const bookDesc = document.getElementById('desc');
 
+  if (!bookTitle.value) { errors.push('No Title Given!'); }
+  if (!bookAuthor.value) { errors.push('No Author Given!'); }
+  if (!bookDesc.value) { errors.push('No Description Given!'); }
+  if (errors.length > 0) {
+    const html = errors.reduce((html, error) => `${html}${errorToHTML(error)}`, '');
+    errorElem.innerHTML = html;
+    return;
+  }
   const book = new Book(bookTitle.value, bookAuthor.value, bookDesc.value);
   myLibrary.push(book);
+  errorElem.innerHTML = '';
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   render();
 }
@@ -75,3 +92,4 @@ if (storedBooks) {
 }
 
 btnAddBook.addEventListener('click', addBookToLibrary);
+btnNewBook.addEventListener('click', () => { errorElem.innerHTML = ''; });
