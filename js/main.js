@@ -20,6 +20,7 @@ Book.prototype.toggleRead = () => {
 const removeBook = (e) => {
   const { bookId } = e.target.dataset;
   myLibrary = myLibrary.filter(book => book.id !== bookId);
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   render();
 };
 
@@ -57,5 +58,12 @@ function addBookToLibrary() {
 
   const book = new Book(bookTitle.value, bookAuthor.value, bookDesc.value);
   myLibrary.push(book);
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+  render();
+}
+
+const storedBooks = localStorage.getItem('myLibrary');
+if (storedBooks) {
+  myLibrary = [...JSON.parse(storedBooks)];
   render();
 }
