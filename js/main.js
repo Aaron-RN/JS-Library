@@ -5,15 +5,28 @@ let myLibrary = [];
 btnAddBook.addEventListener('click', addBookToLibrary);
 
 function Book(title, author, desc) {
+  this.constructor = Book;
   this.id = Math.random().toString(36).substr(2, 9);
   this.title = title;
   this.author = author;
   this.desc = desc;
+  this.wasRead = false;
+}
+
+Book.prototype.toggleRead = function() {
+ this.wasRead = !this.wasRead; 
 }
 
 const removeBook = (e) => {
   const { bookId } = e.target.dataset;
   myLibrary = myLibrary.filter(book => book.id !== bookId);
+  render();
+};
+
+const readBook = (e) => {
+  const { bookId } = e.target.dataset;
+  let book = myLibrary.find(book => book.id === bookId);
+  book.toggleRead();
   render();
 };
 
@@ -23,6 +36,7 @@ const bookToHTML = (book) => `
       <h5 class="card-title">${book.title}</h5>
       <h6 class="card-subtitle mb-2 text-muted">By ${book.author}</h6>
       <p class="card-text">${book.desc}</p>
+      <button class="card-link btn btn-read btn-read-book-${book.wasRead}" data-book-id="${book.id}">Read book</button>
       <button class="card-link btn btn-danger btn-remove-book" data-book-id="${book.id}">Remove book</button>
     </div>
   </div>`;
@@ -32,6 +46,8 @@ function render() {
   libraryDiv.innerHTML = html;
   const removeBookBtns = document.querySelectorAll('.btn-remove-book');
   removeBookBtns.forEach(button => button.addEventListener('click', removeBook));
+  const readBookBtns = document.querySelectorAll('.btn-read');
+  readBookBtns.forEach(button => button.addEventListener('click', readBook));
 }
 
 function addBookToLibrary() {
