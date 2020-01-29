@@ -28,6 +28,7 @@ const readBook = (e) => {
   const { bookId } = e.target.dataset;
   const book = myLibrary.find(book => book.id === bookId);
   book.toggleRead();
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   render();
 };
 
