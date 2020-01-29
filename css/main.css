@@ -1,7 +1,3 @@
-.btn-read-book-false{
-  background-color: grey;
-}
-
-.btn-read-book-true{
-  background-color: green;
+.book {
+  margin-bottom: 20px;
 }

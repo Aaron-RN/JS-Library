@@ -2,8 +2,6 @@ const libraryDiv = document.getElementById('Library');
 const btnAddBook = document.getElementById('btnAddBook');
 let myLibrary = [];
 
-btnAddBook.addEventListener('click', addBookToLibrary);
-
 function Book(title, author, desc) {
   this.constructor = Book;
   this.id = Math.random().toString(36).substr(2, 9);
@@ -13,10 +11,11 @@ function Book(title, author, desc) {
   this.wasRead = false;
 }
 
-Book.prototype.toggleRead = function() {
+Book.prototype.toggleRead = function toogleRead() {
   this.wasRead = !this.wasRead;
 };
 
+/* eslint-disable no-use-before-define */
 const removeBook = (e) => {
   const { bookId } = e.target.dataset;
   myLibrary = myLibrary.filter(book => book.id !== bookId);
@@ -31,15 +30,20 @@ const readBook = (e) => {
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   render();
 };
+/* eslint-enable no-use-before-define */
 
 const bookToHTML = (book) => `
-  <div class="book card">
-    <div class="card-body">
-      <h5 class="card-title">${book.title}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">By ${book.author}</h6>
-      <p class="card-text">${book.desc}</p>
-      <button class="card-link btn btn-read btn-read-book-${book.wasRead}" data-book-id="${book.id}">Read book</button>
-      <button class="card-link btn btn-danger btn-remove-book" data-book-id="${book.id}">Remove book</button>
+  <div class="book col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">${book.title}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">By ${book.author}</h6>
+        <p class="card-text">${book.desc}</p>
+        <button class="card-link btn btn-read btn-${book.wasRead ? 'success' : 'light'}" data-book-id="${book.id}">
+          ${book.wasRead ? 'Mark as unread' : 'Mark as read'}
+        </button>
+        <button class="card-link btn btn-danger btn-remove-book" data-book-id="${book.id}">Remove book</button>
+      </div>
     </div>
   </div>`;
 
@@ -69,3 +73,5 @@ if (storedBooks) {
   myLibrary = [...books];
   render();
 }
+
+btnAddBook.addEventListener('click', addBookToLibrary);
