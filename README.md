@@ -4,7 +4,7 @@ Let’s extend the ‘Book’ example from the previous lesson and turn it into 
 ![screenshot](./screenshot.png)
 
 ## Live Link
-Live Githack Link: https://raw.githack.com/Aaron-RN/Library/Library/index.html
+Live Githack Link: https://raw.githack.com/Aaron-RN/Library/master/index.html
 
 
 ## Built With
