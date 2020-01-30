@@ -1,3 +1,7 @@
+/* eslint-disable import/extensions */
+import { bookToHTML, errorToHTML } from './dom.js';
+/* eslint-enable import/extensions */
+
 const libraryDiv = document.getElementById('Library');
 const errorElem = document.getElementById('errors');
 const btnNewBook = document.getElementById('btnNewBook');

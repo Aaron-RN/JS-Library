@@ -1,4 +1,4 @@
-const bookToHTML = (book) => `
+export const bookToHTML = (book) => `
   <div class="book col-md-6">
     <div class="card shadow">
       <div class="card-body">
@@ -14,7 +14,7 @@ const bookToHTML = (book) => `
     </div>
   </div>`;
 
-const errorToHTML = (error) => `
+export const errorToHTML = (error) => `
   <div class="alert alert-danger" role="alert">
     ${error}
   </div>`;
